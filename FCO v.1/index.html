@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>F.C.O</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo para os campos do formulário */
+        .product-item {
+            margin-bottom: 20px; /* espaço entre cada item de produto */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .product-item label,
+        .product-item input,
+        .product-item button {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .product-item label {
+            width: 100%; /* largura total */
+        }
+
+        .product-item input {
+            width: calc(100% - 20px); /* largura total - margem */
+        }
+
+        .product-item button {
+            width: 100%;
+        }
+
+        #pallet-section {
+            margin-top: 20px; /* espaço entre o botão adicionar produto e o título adicionar palete */
+        }
+
+        h1 {
+            text-align: center; /* centralizar o texto */
+            margin-top: 20px;
+        }
+
+        #message-box {
+            width: calc(100% - 20px); /* largura total - margem */
+            margin: 10px;
+        }
+
+        #add-button {
+            width: calc(100% - 20px); /* largura total - margem */
+            margin: 10px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form input,
+        form textarea,
+        form button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>F.C.O</h1>
+    
+    <div id="product-list">
+        <!-- Aqui serão adicionados os campos de produto e quantidade -->
+    </div>
+
+    <button id="add-button">Adicionar Produto</button>
+
+    <h2 id="pallet-section">Adicionar Palete</h2>
+    <textarea id="message-box" rows="4" placeholder="Digite sua mensagem aqui..."></textarea>
+
+    <form id="email-form" method="post" action="enviar_email.php">
+        <input type="email" name="destinatario" placeholder="Endereço de e-mail do destinatário" required>
+        <input type="text" name="assunto" placeholder="Assunto" required>
+        <textarea name="mensagem" rows="4" placeholder="Mensagem" required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        function createProductItem() {
+            var newItem = document.createElement("div");
+            newItem.classList.add("product-item");
+            newItem.innerHTML = `
+                <label for="product-code">Digite o código do produto:</label>
+                <input type="text" class="product-code" name="product-code">
+                <label for="quantity">Quantidade:</label>
+                <input type="text" class="quantity" name="quantity">
+                <button class="delete-button">Excluir</button>
+            `;
+            return newItem;
+        }
+
+        function deleteProductItem(event) {
+            var item = event.target.parentNode;
+            item.parentNode.removeChild(item);
+        }
+
+        document.getElementById("add-button").addEventListener("click", function() {
+            var productList = document.getElementById("product-list");
+            productList.appendChild(createProductItem());
+        });
+
+        document.addEventListener("click", function(event) {
+            if (event.target.classList.contains("delete-button")) {
+                deleteProductItem(event);
+            }
+        });
+    </script>
+</body>
+</html>
